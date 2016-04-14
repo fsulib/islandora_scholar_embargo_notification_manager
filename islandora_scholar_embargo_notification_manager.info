@@ -1,0 +1,7 @@
+name = Islandora Scholar Embargo Notification Manager
+description = Extends Islandora Scholar Embargo to allow management of expiration notifications
+dependencies[] = islandora
+dependencies[] = islandora_scholar
+package = Islandora Solution Packs
+version = 7.x-1.x
+core = 7.x

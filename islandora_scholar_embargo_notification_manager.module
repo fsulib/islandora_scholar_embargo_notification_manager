@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * Implements hook_islandora_scholar_embargo_users_to_notify()
+ */
+function islandora_scholar_embargo_notification_manager_islandora_scholar_embargo_users_to_notify(AbstractObject $object) {
+  $xml_obj = simplexml_load_string($object['RELS-EXT']->content);
+  $xml_obj->registerXPathNamespace('fedora', 'info:fedora/fedora-system:def/relations-external#');
+  $xml_obj->registerXPathNamespace('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+  $parent = $xml_obj->xpath('//fedora:isMemberOfCollection/@rdf:resource');
+  
+  // Hardcoded array for now, but later this should be an admin menu
+  $parent_collection_array = array(
+    "dev:repo" => array(
+      2485,
+      901,
+    ),
+  );
+  watchdog('ISEN', implode(" ", $parent));
+
+  $testers = user_load_multiple($parent_collection_array['dev:repo']);
+  return $testers;
+}
+
